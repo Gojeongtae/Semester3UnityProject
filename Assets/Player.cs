@@ -10,18 +10,6 @@ using UnityEngine;
 // - NPC : 캐릭터 상태 / 상호작용 처리
 
 
-
-public class FSM : MonoBehaviour
-{
-    public int IDLE = 0;
-    public int WALK = 1;
-    public int CHASE = 2;
-    public int ATTACK = 3;
-    public int DEAD = 4;
-
- 
-
-}
 public enum State
 {
     IDLE = 0,
@@ -31,9 +19,21 @@ public enum State
     DEAD = 4,
 }
 
-public class Player : FSM
+public class Player : MonoBehaviour
 {
     public State currentState = State.IDLE;
+
+    private void Start()
+    {
+        StartCoroutine(FsmMain());
+
+    }
+
+    IEnumerator FsmMain()
+    {
+        Debug.Log("A");
+        yield return null;
+    }
 
     private void OnMouseDown()
     {
