@@ -10,38 +10,47 @@ using UnityEngine;
 // - NPC : 캐릭터 상태 / 상호작용 처리
 
 
-public enum State
+
+public class Player : FSM
 {
-    IDLE = 0,
-    WALK =1,
-    CHASE = 2,
-    ATTACK = 3,
-    DEAD = 4,
-}
-
-public class Player : MonoBehaviour
-{
-    public State currentState = State.IDLE;
-
-    private void Start()
+    void Start()
     {
-        StartCoroutine(FsmMain());
-
+        base.Start();
     }
-
-    IEnumerator FsmMain()
+    private void Update()
     {
-        Debug.Log("A");
-        yield return null;
-    }
-
-    private void OnMouseDown()
-    {
-        currentState = State.DEAD;
-
-        if (currentState == State.DEAD)
+        if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("a");
+            SetState(State.WALK);
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            SetState(State.IDLE);
+        }
+    }
+
+   protected override IEnumerator IDLE()
+    {
+        //이 상태에 오면 애니메이션 전환
+        Debug.Log("Player." + currentState + ".Start");
+        while (isNewState == false)
+        {
+            //대기시간이 지나면 랜덤하게 특정 지점을 선택해서 이동한다.
+            //SetState(State.Walk);
+            Debug.Log("Player." + currentState + ".ING");
+            yield return null;
+        }
+    }
+
+    protected override IEnumerator WALK()
+    {
+        Debug.Log("Player." + currentState + ".Start");
+        while(isNewState == false)
+        {
+            //특정 지점까지 이동
+            //완료되면 IDLE로 전환
+            Debug.Log("Player" + currentState + ".ING");
+            yield return null;
         }
     }
 }
