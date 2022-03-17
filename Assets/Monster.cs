@@ -4,15 +4,48 @@ using UnityEngine;
 
 public class Monster : FSM
 {
+    Transform target;
+    float enemyMoveSpeed = 2f;
+
     // Start is called before the first frame update
     void Start()
     {
         base.Start();
+        InvokeRepeating("UpdateTarget", 0f, 0.25f);
+    }
+
+    private void UpdateTarget()
+    {
+        Collider[] cols = Physics.OverlapSphere(transform.position, 100f, 1 << 8);
+
+        if (cols.Length > 0)
+        {
+
+            for (int i = 0; i < cols.Length; i++)
+            {
+                if (cols[i].tag == "Player")
+                {
+                    Debug.Log("Physics Enemy : Target found");
+                    target = cols[i].gameObject.transform;
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Physics Enemy : Target lost");
+            target = null;
+        }
     }
 
     // Update is called once per frame
-    void Update()
+        void Update()
     {
+        if (target != null)
+        {
+            Vector3 dir = target.position - transform.position;
+            transform.Translate(dir.normalized * enemyMoveSpeed * Time.deltaTime);
+        }
+
         if (currentState == State.WALK && Input.GetMouseButtonDown(0))
         {
             isNewState = true;

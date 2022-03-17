@@ -37,7 +37,6 @@ public class Player : FSM
         {
             //대기시간이 지나면 랜덤하게 특정 지점을 선택해서 이동한다.
             //SetState(State.Walk);
-            Debug.Log("Player." + currentState + ".ING");
             yield return null;
         }
     }
@@ -49,7 +48,6 @@ public class Player : FSM
         {
             //특정 지점까지 이동
             //완료되면 IDLE로 전환
-            Debug.Log("Player" + currentState + ".ING");
             yield return null;
         }
     }
