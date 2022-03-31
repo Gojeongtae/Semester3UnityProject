@@ -14,14 +14,13 @@ public class FSM : MonoBehaviour
 {
     public State currentState = State.IDLE;
     protected bool isNewState = false;//새로운 상태로 바뀌는 중인지 아닌지? 파악하는 변수
-
-    Animator animator;
-
+    //Animator animator;
     // Start is called before the first frame update
     protected void Start()
     {
         //animator = GetComponent<Animator>();
         StartCoroutine(FsmMain());
+
     }
 
     private IEnumerator FsmMain()
@@ -35,21 +34,20 @@ public class FSM : MonoBehaviour
         }
     }
 
-    protected virtual IEnumerator IDLE() 
-    { 
-        yield return null; 
+    protected virtual IEnumerator IDLE()
+    {
+        yield return null;
     }
 
     protected virtual IEnumerator WALK()
     {
         yield return null;
     }
-
-    protected virtual IEnumerator CHASE()
+    protected virtual IEnumerator ATTACK()
     {
         yield return null;
     }
-    protected virtual IEnumerator ATTACK()
+    protected virtual IEnumerator CHASE()
     {
         yield return null;
     }
@@ -62,7 +60,7 @@ public class FSM : MonoBehaviour
     {
         isNewState = true;
         currentState = newState;
-        //animator.SetInteger("state", (int)currentState);
+        //animator.SetInteger("state",(int)currentState);
     }
 
 }
